@@ -13,6 +13,11 @@ public class BendingMachene {
 		acceptedMoney.add(Money.BILL1000);
 	}
 	
+	Map<Drink, Integer> containtedDrinks = new HashMap<Drink, Integer>();
+	{
+		containtedDrinks.put(Drink.COKE, 5);
+	}
+	
 	private int insertedMoney = 0;
 	
 	public int insert(Money money) {
@@ -35,14 +40,23 @@ public class BendingMachene {
 	}
 
 	public Map<Drink, Integer> getContainedDrinks() {
-		Map<Drink, Integer> containtedDrinks = new HashMap<Drink, Integer>();
-		containtedDrinks.put(Drink.COKE, 5);
-		return containtedDrinks;
+		Map<Drink, Integer> ret = new HashMap<Drink, Integer>();
+		ret.putAll(containtedDrinks);
+		return ret;
 	}
 
-	public int getRest(Drink coke) {
-		// TODO Auto-generated method stub
-		return 5;
+	public int getRest(Drink drink) {
+		return containtedDrinks.get(drink);
+	}
+
+	public boolean canPurchaseCoke() {
+		return insertedMoney >= Drink.COKE.getPrice();
+	}
+
+	public Drink purchase() {
+		Integer rem = containtedDrinks.get(Drink.COKE);
+		containtedDrinks.put(Drink.COKE, rem -1);
+		return Drink.COKE;
 	}
 
 }

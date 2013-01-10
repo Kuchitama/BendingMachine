@@ -71,4 +71,29 @@ public class BendingMachineTest {
 		assertThat(bm.getContainedDrinks(), is(expected));
 		
 	}
+	
+	@Test
+	public void コーラを買えるかどうかを取得_投入金額が充分なら買える() {
+		bm.insert(Money.COIN50);
+		bm.insert(Money.COIN100);
+		
+		assertTrue(bm.canPurchaseCoke());
+	}
+	
+	@Test
+	public void コーラを買えるかどうかを取得_投入金額が不充分なら買えない() {
+		bm.insert(Money.COIN50);
+		
+		assertFalse(bm.canPurchaseCoke());
+	}
+	
+	@Test
+	public void ジュースを買うと在庫が減る() {
+		bm.insert(Money.COIN100);
+		bm.insert(Money.COIN10);
+		bm.insert(Money.COIN10);
+		
+		bm.purchase();
+		assertThat(bm.getRest(Drink.COKE), is(4));
+	}
 }
